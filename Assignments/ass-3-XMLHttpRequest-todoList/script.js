@@ -22,11 +22,23 @@ let object = {
 };
 
 const fetchTodos = async () => {
+  const loading = document.getElementById("loading");
+  const ul = document.getElementById("todo-list");
+
   try {
     const response = await request(object);
     const todos = JSON.parse(response);
+
+    todos.forEach(todo => {
+      const li = document.createElement("li");
+      li.textContent = `${todo.title} ${todo.completed ? "(✔️)" : "(❌)"}`;
+      ul.appendChild(li);
+    });
+
+    loading.style.display = "none";
   } catch (error) {
-    console.error(`Error fetching todos: ${error}`);
+    loading.textContent = `Failed to load todos: ${error}`;
+    loading.style.color = "red";
   }
 };
 
