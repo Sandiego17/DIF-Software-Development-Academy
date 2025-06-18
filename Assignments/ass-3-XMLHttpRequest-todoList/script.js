@@ -21,9 +21,13 @@ let object = {
   body: null
 };
 
-let result = [];
+const fetchTodos = async () => {
+  try {
+    const response = await request(object);
+    const todos = JSON.parse(response);
+  } catch (error) {
+    console.error(`Error fetching todos: ${error}`);
+  }
+};
 
-// Refactor this to use async/await instead
-request(object)
-  .then(result => results = result)
-  .catch(error => console.log(`Error: ${error}`));
+fetchTodos();
