@@ -1,6 +1,6 @@
-let request = (obj) => {
+const request = (obj) => {
   return new Promise((resolve, reject) => {
-    let req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
 
     req.open(obj.method || "GET", obj.url);
     req.onload = () => {
@@ -15,7 +15,7 @@ let request = (obj) => {
   });
 };
 
-let object = {
+const object = {
   url: "https://jsonplaceholder.typicode.com/todos",
   method: "GET",
   body: null
@@ -23,17 +23,55 @@ let object = {
 
 const fetchTodos = async () => {
   const loading = document.getElementById("loading");
-  const ul = document.getElementById("todo-list");
+  const container = document.getElementById("users-container");
 
   try {
     const response = await request(object);
     const todos = JSON.parse(response);
 
+    // Group todos by userId
+    const usersMap = {};
     todos.forEach(todo => {
-      const li = document.createElement("li");
-      li.textContent = `${todo.title} ${todo.completed ? "(✔️)" : "(❌)"}`;
-      ul.appendChild(li);
+      if (!usersMap[todo.userId]) {
+        usersMap[todo.userId] = [];
+      }
+      usersMap[todo.userId].push(todo);
     });
+
+    // Build UI for each user
+    for (const userId in usersMap) {
+      const userDiv = document.createElement("div");
+      userDiv.className = "user";
+
+      const userHeader = document.createElement("div");
+      userHeader.className = "user-header";
+      userHeader.textContent = `User ${userId}`;
+      userDiv.appendChild(userHeader);
+
+      const todoList = document.createElement("ul");
+      todoList.className = "todo-list";
+
+      usersMap[userId].forEach(todo => {
+        const li = document.createElement("li");
+        li.className = "todo-item";
+        li.innerHTML = `
+          <strong>#${todo.id}:</strong> ${todo.title}
+          <span class="${todo.completed ? "completed" : "not-completed"}">
+            ${todo.completed ? "(✔️ Completed)" : "(❌ Not Completed)"}
+          </span>
+        `;
+        todoList.appendChild(li);
+      });
+
+      userDiv.appendChild(todoList);
+      container.appendChild(userDiv);
+
+      // Toggle functionality
+      userHeader.addEventListener("click", () => {
+        todoList.style.display = 
+          todoList.style.display === "none" ? "block" : "none";
+      });
+    }
 
     loading.style.display = "none";
   } catch (error) {
