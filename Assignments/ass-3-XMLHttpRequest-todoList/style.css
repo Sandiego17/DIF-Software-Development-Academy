@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background-color: #f7f9fc;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+#loading {
+  text-align: center;
+  font-weight: bold;
+  color: blue;
+  margin-bottom: 1rem;
+}
+
+.user {
+  background-color: #fff;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.user-header {
+  padding: 1rem;
+  cursor: pointer;
+  background-color: #e3f2fd;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+}
+
+.todo-list {
+  display: none;
+  padding: 0 1rem 1rem;
+  list-style-type: none;
+  margin: 0;
+}
+
+.todo-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.completed {
+  color: green;
+  font-weight: bold;
+}
+
+.not-completed {
+  color: red;
+  font-weight: bold;
+}
