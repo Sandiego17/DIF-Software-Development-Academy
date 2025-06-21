@@ -32,20 +32,22 @@ h1 {
   border-radius: 8px 8px 0 0;
 }
 
-.todo-list {
-  display: none;
-  padding: 0 1rem 1rem;
-  list-style-type: none;
-  margin: 0;
+.todo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  background-color: #fff;
 }
 
-.todo-item {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
+.todo-table th,
+.todo-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
-.todo-item:last-child {
-  border-bottom: none;
+.todo-table th {
+  background-color: #f1f1f1;
 }
 
 .completed {
