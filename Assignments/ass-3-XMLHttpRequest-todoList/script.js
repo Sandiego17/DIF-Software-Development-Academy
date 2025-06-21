@@ -38,7 +38,6 @@ const fetchTodos = async () => {
       usersMap[todo.userId].push(todo);
     });
 
-    // Build UI for each user
     for (const userId in usersMap) {
       const userDiv = document.createElement("div");
       userDiv.className = "user";
@@ -48,28 +47,41 @@ const fetchTodos = async () => {
       userHeader.textContent = `User ${userId}`;
       userDiv.appendChild(userHeader);
 
-      const todoList = document.createElement("ul");
-      todoList.className = "todo-list";
+      const table = document.createElement("table");
+      table.className = "todo-table";
+
+      const thead = document.createElement("thead");
+      thead.innerHTML = `
+        <tr>
+          <th>ID</th>
+          <th>Todo Item</th>
+          <th>Status</th>
+        </tr>
+      `;
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
 
       usersMap[userId].forEach(todo => {
-        const li = document.createElement("li");
-        li.className = "todo-item";
-        li.innerHTML = `
-          <strong>#${todo.id}:</strong> ${todo.title}
-          <span class="${todo.completed ? "completed" : "not-completed"}">
-            ${todo.completed ? "(✔️ Completed)" : "(❌ Not Completed)"}
-          </span>
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${todo.id}</td>
+          <td>${todo.title}</td>
+          <td class="${todo.completed ? "completed" : "not-completed"}">
+            ${todo.completed ? "✔️ Completed" : "❌ Not Completed"}
+          </td>
         `;
-        todoList.appendChild(li);
+        tbody.appendChild(row);
       });
 
-      userDiv.appendChild(todoList);
+      table.appendChild(tbody);
+      table.style.display = "none";
+      userDiv.appendChild(table);
+
       container.appendChild(userDiv);
 
-      // Toggle functionality
       userHeader.addEventListener("click", () => {
-        todoList.style.display = 
-          todoList.style.display === "none" ? "block" : "none";
+        table.style.display = table.style.display === "none" ? "table" : "none";
       });
     }
 
