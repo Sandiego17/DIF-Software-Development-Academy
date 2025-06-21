@@ -24,6 +24,7 @@ const object = {
 const fetchTodos = async () => {
   const loading = document.getElementById("loading");
   const container = document.getElementById("users-container");
+  const userDiv = container.querySelector(".user");
 
   try {
     const response = await request(object);
@@ -38,29 +39,16 @@ const fetchTodos = async () => {
       usersMap[todo.userId].push(todo);
     });
 
+    // Clear placeholder template from DOM
+    container.innerHTML = "";
+
     for (const userId in usersMap) {
-      const userDiv = document.createElement("div");
-      userDiv.className = "user";
+      const userClone = userDiv.cloneNode(true);
+      const userHeader = userClone.querySelector(".user-header");
+      const table = userClone.querySelector(".todo-table");
+      const tbody = userClone.querySelector("tbody");
 
-      const userHeader = document.createElement("div");
-      userHeader.className = "user-header";
       userHeader.textContent = `User ${userId}`;
-      userDiv.appendChild(userHeader);
-
-      const table = document.createElement("table");
-      table.className = "todo-table";
-
-      const thead = document.createElement("thead");
-      thead.innerHTML = `
-        <tr>
-          <th>ID</th>
-          <th>Todo Item</th>
-          <th>Status</th>
-        </tr>
-      `;
-      table.appendChild(thead);
-
-      const tbody = document.createElement("tbody");
 
       usersMap[userId].forEach(todo => {
         const row = document.createElement("tr");
@@ -74,15 +62,13 @@ const fetchTodos = async () => {
         tbody.appendChild(row);
       });
 
-      table.appendChild(tbody);
       table.style.display = "none";
-      userDiv.appendChild(table);
-
-      container.appendChild(userDiv);
 
       userHeader.addEventListener("click", () => {
         table.style.display = table.style.display === "none" ? "table" : "none";
       });
+
+      container.appendChild(userClone);
     }
 
     loading.style.display = "none";
