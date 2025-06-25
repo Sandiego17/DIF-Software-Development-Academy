@@ -1,0 +1,54 @@
+body {
+  background-color: #232323;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+h1 {
+  background-color: steelblue;
+  margin: 0;
+  padding: 20px;
+  font-size: 2rem;
+}
+
+#colorDisplay {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+#stripe {
+  background-color: white;
+  padding: 10px;
+  color: black;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: steelblue;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+
+#container {
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.square {
+  width: 30%;
+  padding-bottom: 30%;
+  margin: 1.66%;
+  background-color: purple;
+  display: inline-block;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
